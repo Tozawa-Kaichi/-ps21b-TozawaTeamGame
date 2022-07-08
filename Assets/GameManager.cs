@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     [SerializeField] string _blockPrefabName = "BlockPrefab";
     [SerializeField] Transform _blockAnchorRoot;
+    [SerializeField] Text _message;
 
     public void InitializeGame()
     {
@@ -27,7 +29,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (photonEvent.Code == 2)
         {
             int killedPlayerActorNumber = (int)photonEvent.CustomData;
-            print($"Player {photonEvent.Sender} retired.");
+            string message = $"Player {killedPlayerActorNumber} retired.";
+            print(message);
+
+            if (_message)
+            {
+                _message.text = message;
+            }
 
             // Ç‚ÇÁÇÍÇΩÇÃÇ™é©ï™ÇæÇ¡ÇΩÇÁé©ï™Çè¡Ç∑
             if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)

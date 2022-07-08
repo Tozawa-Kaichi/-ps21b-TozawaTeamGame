@@ -7,7 +7,7 @@ using Photon.Realtime;
 /// <summary>
 /// 当たったら死ぬオブジェクト
 /// </summary>
-[RequireComponent(typeof(PhotonView), typeof(Collider))]
+[RequireComponent(typeof(Collider))]
 public class KillZone : MonoBehaviour
 {
     PhotonView _view;
@@ -19,8 +19,8 @@ public class KillZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        // オーナー側で判定する
-        if (collision.tag == "Player" && _view.IsMine)
+        // MasterClient で判定する
+        if (collision.tag == "Player" && PhotonNetwork.IsMasterClient)
         {
             // 誰が接触したかを判定し、イベント通知する
             int actorNum = collision.GetComponent<PhotonView>().OwnerActorNr;
