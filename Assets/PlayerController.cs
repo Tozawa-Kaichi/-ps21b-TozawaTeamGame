@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour
     PhotonView _view;
     Vector3 _input;
 
+    public Animation _anim;
+    public GameObject _particleObject;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _view = GetComponent<PhotonView>();
+        _anim = GetComponent<Animation>();
 
         // プレイヤーからゲームを初期化する（本当はそうしない方がよい）
         if (PhotonNetwork.IsMasterClient)
@@ -32,6 +36,10 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
         _input = new Vector3(h, 0, v);
+        if (Input.GetKeyDown("Fire1"))
+        {
+            BreakFloor();
+        }
     }
 
     private void FixedUpdate()
@@ -44,5 +52,11 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(_input.normalized * _power);
             this.transform.forward = _rb.velocity;
         }
+    }
+
+    void BreakFloor()
+    {
+       _anim.Play();
+        Instantiate(_particleObject, this.transform.position, Quaternion.identity);
     }
 }
