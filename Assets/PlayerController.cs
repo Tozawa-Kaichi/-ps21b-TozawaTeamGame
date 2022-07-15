@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
         _input = new Vector3(h, 0, v);
-        if (Input.GetKeyDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             BreakFloor();
         }
