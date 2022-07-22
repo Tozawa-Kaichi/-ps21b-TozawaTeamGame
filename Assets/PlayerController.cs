@@ -9,12 +9,15 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _power = 10f;
+    [SerializeField] float _jumpPower = 10f;
     Rigidbody _rb;
     PhotonView _view;
     Vector3 _input;
 
     public Animation _anim;
     public GameObject _particleObject;
+    [SerializeField]
+    private bool _isGround;
 
     void Start()
     {
@@ -40,6 +43,11 @@ public class PlayerController : MonoBehaviour
         {
             BreakFloor();
         }
+        if (Input.GetButtonDown("Jump"))
+        {
+            Debug.Log("jump");
+            Jump();
+        }
     }
 
     private void FixedUpdate()
@@ -58,5 +66,19 @@ public class PlayerController : MonoBehaviour
     {
        _anim.Play();
         Instantiate(_particleObject, this.transform.position, Quaternion.identity);
+    }
+
+    void Jump()
+    {
+        _isGround = false;
+        _rb.AddForce(new Vector3(0, _jumpPower, 0));
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "ground")
+        {
+            _isGround = true;
+        }
     }
 }
