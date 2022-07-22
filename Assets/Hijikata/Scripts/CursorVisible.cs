@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectBlock : MonoBehaviour
+public class CursorVisible : MonoBehaviour
 {
     [SerializeField,Tooltip("カーソルが画面にでるか出ないか")] bool IsVisible = default;
 

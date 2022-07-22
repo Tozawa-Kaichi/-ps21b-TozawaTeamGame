@@ -877,7 +877,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397085768}
-  - component: {fileID: 397085767}
+  - component: {fileID: 397085770}
+  - component: {fileID: 397085769}
   m_Layer: 0
   m_Name: Cursor
   m_TagString: Untagged
@@ -885,18 +886,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &397085767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 397085766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4906c26aec351814aacd9a7e5471133e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &397085768
 Transform:
   m_ObjectHideFlags: 0
@@ -912,6 +901,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &397085769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397085766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd0eab8e570e1042a9a6d4642e026ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonName: Fire1
+  _tagName: 
+  _distance: 10
+--- !u!114 &397085770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397085766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4906c26aec351814aacd9a7e5471133e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsVisible: 1
+  _cursorTexture: {fileID: 2800000, guid: 18ef107e27d34de40a70081497edf8f0, type: 3}
 --- !u!1 &583937243
 GameObject:
   m_ObjectHideFlags: 0
