@@ -287,10 +287,10 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         Rigidbody rb = go.GetComponent<Rigidbody>();
         for (int i = 3; i > -1; i--)
         {
+            rb.isKinematic = true;
             yield return new WaitForSeconds(1);//1秒待つ
             countDownText.text = i.ToString();
             timeObj.SetActive(false);
-            rb.isKinematic = true;
             if (i == 0)
             {
                 countDownText.text = "START!";
