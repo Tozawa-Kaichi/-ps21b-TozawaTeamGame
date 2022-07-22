@@ -7,7 +7,7 @@ using ExitGames.Client.Photon;
 
 /// <summary>
 /// ゲームを管理するコンポーネント
-/// イベントコード 2 を Kill とする
+/// イベントコード 1 を Kill とする
 /// </summary>
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
@@ -25,18 +25,20 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     void IOnEventCallback.OnEvent(EventData photonEvent)
     {
-        // やられたイベントは 2 とする
-        if (photonEvent.Code == 2)
+        // やられたイベントは 1 とする
+        if (photonEvent.Code == 1)
         {
             int killedPlayerActorNumber = (int)photonEvent.CustomData;
-            string message = $"Player {killedPlayerActorNumber} retired.";
+           /* string message = $"Player {killedPlayerActorNumber} retired.";
             print(message);
-
             if (_message)
             {
                 _message.text = message;
+            }*/
+            if(killedPlayerActorNumber ==1&&killedPlayerActorNumber==2)
+            {
+                string drawMessage = $"Player {killedPlayerActorNumber} Draw!";
             }
-
             // やられたのが自分だったら自分を消す
             if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
             {
@@ -44,6 +46,41 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
                 PhotonView view = me.GetPhotonView();
                 PhotonNetwork.Destroy(view);
+                if(killedPlayerActorNumber ==1)
+                {
+                    string loseMessage = $"Player {killedPlayerActorNumber} Lose!";
+                    if (_message)
+                    {
+                        _message.text = loseMessage;
+                    }
+                }
+                else if(killedPlayerActorNumber ==2)
+                {
+                    string loseMessage1 = $"Player {killedPlayerActorNumber} Lose!";
+                    if (_message)
+                    {
+                        _message.text = loseMessage1;
+                    }
+                }
+            }
+            else if(killedPlayerActorNumber!= PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                if(killedPlayerActorNumber==1)
+                {
+                    string winMessage = $"Player {killedPlayerActorNumber+1} Win!";
+                    if (_message)
+                    {
+                        _message.text = winMessage;
+                    }
+                }
+                else if(killedPlayerActorNumber ==2)
+                {
+                    string winMessage1 = $"Player {killedPlayerActorNumber-1} Win!";
+                    if (_message)
+                    {
+                        _message.text = winMessage1;
+                    }
+                }
             }
         }
     }
