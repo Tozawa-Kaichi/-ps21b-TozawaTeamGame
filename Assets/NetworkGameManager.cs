@@ -12,6 +12,12 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
 
+
+
+
+    /// <summary>プレイヤーを生成後の消えないPlatformオブジェクト</summary>
+    [SerializeField] GameObject[] _asiba = default;
+
     private void Awake()
     {
         // シーンの自動同期は無効にする（シーン切り替えがない時は意味はない）
@@ -295,6 +301,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
 
     private void Platformfalse()
     {
-
+        for(int a = 0; a <= _asiba.Length;a++)
+        {
+            _asiba[a].SetActive(true);
+        }
     }
 }
