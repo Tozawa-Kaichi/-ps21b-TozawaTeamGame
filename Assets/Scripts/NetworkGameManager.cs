@@ -8,13 +8,17 @@ using Photon.Realtime;
 using System.Collections;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime 用のクラスを継承する
-{
-    /// <summary>プレイヤーのプレハブの名前</summary>
+{   /// <summary>プレイヤーのプレハブの名前</summary>
     [SerializeField] string _playerPrefabName = "Prefab";
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
     [SerializeField] Text waitNow = default;
     [SerializeField] Text countDownText = default;
+    [SerializeField] GameObject timeObj = default;
+
+
+
+
     private void Awake()
     {
         // シーンの自動同期は無効にする（シーン切り替えがない時は意味はない）
@@ -177,7 +181,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         int playerCount = PhotonNetwork.LocalPlayer.ActorNumber;
         if (playerCount != PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            waitNow.text = "対戦相手を待っています。";
+            waitNow.text = "対戦相手を待っています・・・";
         }
         else
         {
@@ -279,17 +283,24 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     }
     IEnumerator CountDown()
     {
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        Rigidbody rb = go.GetComponent<Rigidbody>();
         for (int i = 3; i > -1; i--)
         {
             yield return new WaitForSeconds(1);//1秒待つ
             countDownText.text = i.ToString();
+            timeObj.SetActive(false);
+            rb.isKinematic = true;
             if (i == 0)
             {
                 countDownText.text = "START!";
                 yield return new WaitForSeconds(1);
+                rb.isKinematic = false;
                 countDownText.gameObject.SetActive(false);
+                timeObj.SetActive(true);
             }
         }
         yield break;
     }
+
 }
