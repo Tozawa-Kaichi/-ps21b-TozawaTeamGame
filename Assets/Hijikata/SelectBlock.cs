@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class SelectBlock : MonoBehaviour
 {
+    [SerializeField,Tooltip("カーソルが画面にでるか出ないか")] bool IsVisible = default;
+
+    [SerializeField,Tooltip("カーソルの画像を入れる。なければなにもいれなくて大丈夫")] Texture2D _cursorTexture = default;
+    Vector2 _hotSpot;
+    CursorMode _cursorMode;
+
     void Start()
     {
-        Cursor.visible = true;
-    }
+        //カーソルの表示
+        Cursor.visible = IsVisible;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _hotSpot = Vector2.zero;
+        _cursorMode = CursorMode.Auto;
+
+        if(_cursorTexture == null)
+        {
+            _cursorTexture = null;
+        }
+        //カーソルの画像の差し替え
+        Cursor.SetCursor(_cursorTexture, _hotSpot, _cursorMode);
     }
 }
