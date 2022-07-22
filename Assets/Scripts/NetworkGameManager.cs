@@ -178,10 +178,13 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     {
         Debug.Log("OnJoinedRoom");
         SpawnPlayer();
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        Rigidbody rb = go.GetComponent<Rigidbody>();
         int playerCount = PhotonNetwork.LocalPlayer.ActorNumber;
         if (playerCount != PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             waitNow.text = "対戦相手を待っています・・・";
+            rb.isKinematic = true;
         }
         else
         {
