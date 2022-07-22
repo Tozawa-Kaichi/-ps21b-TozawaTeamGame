@@ -263,4 +263,38 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime ç
     {
         Debug.Log("OnCustomAuthenticationFailed");
     }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void Platformfalse()
+    {
+
+    }
 }
