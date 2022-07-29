@@ -28,7 +28,7 @@ public class KillZone : MonoBehaviour
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions();
             raiseEventOptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
-            PhotonNetwork.RaiseEvent(2, actorNum, raiseEventOptions, sendOptions);
+            PhotonNetwork.RaiseEvent(1, actorNum, raiseEventOptions, sendOptions);
         }
     }
 }
