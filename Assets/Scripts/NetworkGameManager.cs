@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 // Photon 用の名前空間を参照する
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -16,6 +15,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     [SerializeField] Text waitNow = default;
     [SerializeField] Text countDownText = default;
     [SerializeField] GameObject timeObj = default;
+
+
 
 
     private void Awake()
@@ -178,7 +179,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         Debug.Log("OnJoinedRoom");
         SpawnPlayer();
         GameObject go = GameObject.FindGameObjectWithTag("Player");
-        go.TryGetComponent(out Rigidbody rb);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
         int playerCount = PhotonNetwork.LocalPlayer.ActorNumber;
         if (playerCount != PhotonNetwork.CurrentRoom.MaxPlayers)
         {
@@ -286,7 +287,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     IEnumerator CountDown()
     {
         GameObject go = GameObject.FindGameObjectWithTag("Player");
-        go.TryGetComponent(out Rigidbody rb);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
         for (int i = 3; i > -1; i--)
         {
             rb.isKinematic = true;
