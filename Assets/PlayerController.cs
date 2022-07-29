@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _power = 10f;
     [SerializeField] float _jumpPower = 10f;
+    [SerializeField] float _dushPower = 2f;
     Rigidbody _rb;
     PhotonView _view;
     Vector3 _input;
 
-    public Animation _anim;
-    public GameObject _particleObject;
+    //public Animation _anim;
+    //public GameObject _particleObject;
     [SerializeField]
     private bool _isGround;
 
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _view = GetComponent<PhotonView>();
-        _anim = GetComponent<Animation>();
+        //_anim = GetComponent<Animation>();
 
         // プレイヤーからゲームを初期化する（本当はそうしない方がよい）
         if (PhotonNetwork.IsMasterClient)
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour
         {
             BreakFloor();
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump")&&_isGround)
         {
             Debug.Log("jump");
             Jump();
@@ -57,28 +58,41 @@ public class PlayerController : MonoBehaviour
 
         if (_input != Vector3.zero)
         {
-            _rb.AddForce(_input.normalized * _power);
-            this.transform.forward = _rb.velocity;
+            if (Input.GetButton("Fire1"))
+            {
+                _rb.AddForce(_input.normalized * _power * _dushPower);
+                this.transform.forward = _rb.velocity;
+                Debug.Log("Dush");
+            }
+            else
+            {
+                _rb.AddForce(_input.normalized * _power);
+                this.transform.forward = _rb.velocity;
+            }
         }
     }
 
     void BreakFloor()
     {
-       _anim.Play();
-        Instantiate(_particleObject, this.transform.position, Quaternion.identity);
+       //_anim.Play();
+        //Instantiate(_particleObject, this.transform.position, Quaternion.identity);
     }
 
     void Jump()
     {
-        _isGround = false;
         _rb.AddForce(new Vector3(0, _jumpPower, 0));
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "ground")
+        if(other.gameObject.tag == "floor")
         {
             _isGround = true;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        _isGround = false;
     }
 }
