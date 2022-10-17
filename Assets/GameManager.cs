@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         _message.text = DrawMessage;
                     }
                 }
-                TimerDecreseController.timeGroup = 2;
+                TimeCountText.timeGroup = 2;
             }
             else if(killedPlayerActorNumber!= PhotonNetwork.LocalPlayer.ActorNumber)
             {
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         _message.text = winMessage1;
                     }
                 }
-                TimerDecreseController.timeGroup = 2;
+                TimeCountText.timeGroup = 2;
                 rb.isKinematic = true;
             }
         }
