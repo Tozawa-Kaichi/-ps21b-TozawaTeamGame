@@ -86,13 +86,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         _message.text = DrawMessage;
                     }
                 }
+                TimeCountText.timeGroup = 2;
             }
             else if(killedPlayerActorNumber!= PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 GameObject go = GameObject.FindGameObjectWithTag("Player");
                 go.TryGetComponent(out Rigidbody rb);
                 if(killedPlayerActorNumber==1)
-                {
+                {                   
                     string winMessage = $"Player {killedPlayerActorNumber+1} Win!";
                     if (_message)
                     {
@@ -107,6 +108,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         _message.text = winMessage1;
                     }
                 }
+                TimeCountText.timeGroup = 2;
+                rb.isKinematic = true;
             }
         }
     }
