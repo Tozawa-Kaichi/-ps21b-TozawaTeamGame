@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 // Photon 用の名前空間を参照する
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime 用のクラスを継承する
-{
-    /// <summary>プレイヤーのプレハブの名前</summary>
+{   /// <summary>プレイヤーのプレハブの名前</summary>
     [SerializeField] string _playerPrefabName = "Prefab";
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
+    [SerializeField] Text waitNow = default;
+    [SerializeField] Text countDownText = default;
+    [SerializeField] GameObject timeObj = default;
 
-
-
-
-    /// <summary>プレイヤーを生成後の消えないPlatformオブジェクト</summary>
-    [SerializeField] GameObject[] _asiba = default;
 
     private void Awake()
     {
@@ -177,6 +177,18 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     {
         Debug.Log("OnJoinedRoom");
         SpawnPlayer();
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        go.TryGetComponent(out Rigidbody rb);
+        int playerCount = PhotonNetwork.LocalPlayer.ActorNumber;
+        if (playerCount != PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            waitNow.text = "対戦相手を待っています・・・";
+            rb.isKinematic = true;
+        }
+        else
+        {
+            StartCoroutine(CountDown());
+        }
     }
 
     /// <summary>指定した部屋への入室に失敗した時</summary>
@@ -202,6 +214,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("OnPlayerEnteredRoom: " + newPlayer.NickName);
+        waitNow.gameObject.SetActive(false);
+        StartCoroutine(CountDown());
     }
 
     /// <summary>自分のいる部屋から他のプレイヤーが退室した時</summary>
@@ -269,41 +283,26 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     {
         Debug.Log("OnCustomAuthenticationFailed");
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void Platformfalse()
+    IEnumerator CountDown()
     {
-        for(int a = 0; a <= _asiba.Length;a++)
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        go.TryGetComponent(out Rigidbody rb);
+        for (int i = 3; i > -1; i--)
         {
-            _asiba[a].SetActive(true);
+            rb.isKinematic = true;
+            yield return new WaitForSeconds(1);//1秒待つ
+            countDownText.text = i.ToString();
+            timeObj.SetActive(false);
+            if (i == 0)
+            {
+                countDownText.text = "START!";
+                yield return new WaitForSeconds(1);
+                rb.isKinematic = false;
+                countDownText.gameObject.SetActive(false);
+                timeObj.SetActive(true);
+            }
         }
+        yield break;
     }
+
 }
