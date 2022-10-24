@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 8551729208011996985}
   - component: {fileID: 8551729208011996932}
   - component: {fileID: 8551729208011996987}
+  - component: {fileID: 9221264292820581256}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -251,10 +252,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8551729208011996979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81dee40d942747147b5f56c1903f3ab2, type: 3}
+  m_Script: {fileID: 11500000, guid: aad158ac869eb384abaeb396cb462e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _power: 10
+  _jumpPower: 10
+  _dushPower: 2
+  _isGround: 0
 --- !u!114 &8551729208011996932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,3 +291,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!65 &9221264292820581256
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8551729208011996979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1501174, y: 0.14803362, z: 0.13895369}
+  m_Center: {x: -0.001969099, y: -0.9867482, z: -0.0032584667}
