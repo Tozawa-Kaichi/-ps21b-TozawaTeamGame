@@ -28,10 +28,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!_view.IsMine) return;
-        float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
         _input = new Vector3(h, 0, v);
+
+        if (_input != Vector3.zero)
+        {
+            this.transform.forward = _input;
+        }
     }
 
     private void FixedUpdate()
