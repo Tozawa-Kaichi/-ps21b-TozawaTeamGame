@@ -10,7 +10,7 @@ using System.Collections;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime 用のクラスを継承する
 {   /// <summary>プレイヤーのプレハブの名前</summary>
-    [SerializeField] string _playerPrefabName = "Prefab";
+    [SerializeField] string _playerPrefabName = "PlayerPrefab";
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
     [SerializeField] Text waitNow = default;
@@ -22,12 +22,28 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     {
         // シーンの自動同期は無効にする（シーン切り替えがない時は意味はない）
         PhotonNetwork.AutomaticallySyncScene = false;
+        if(waitNow==null)
+        {
+            Debug.LogError($"{waitNow}がないよ");
+        }
+        if(countDownText ==null)
+        {
+            Debug.LogError($"{countDownText}がないよ");
+        }
+        if(timeObj ==null)
+        {
+            Debug.LogError($"{timeObj}がないよ");
+        }
     }
 
     private void Start()
     {
         // Photon に接続する
         Connect("1.0"); // 1.0 はバージョン番号（同じバージョンを指定したクライアント同士が接続できる）
+
+
+
+
     }
 
     /// <summary>
