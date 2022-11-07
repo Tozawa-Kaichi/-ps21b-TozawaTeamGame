@@ -8,6 +8,11 @@ public class TimeCountText : MonoBehaviour
     public static int timeGroup = 0;
     [SerializeField] Text timeText;
     [SerializeField] Text timeUpText;
+    bool _isTimeStop;
+    /// <summary>
+    /// タイマーフラグのプロパティ
+    /// </summary>
+    public bool IsTimeStop { get => _isTimeStop; set => _isTimeStop = value; } 
     void Start()
     {
         if(timeText == null)
@@ -18,21 +23,16 @@ public class TimeCountText : MonoBehaviour
         {
             Debug.LogError($"Text{timeUpText}ないよ");
         }
+        _isTimeStop = true;
+        timeText.gameObject.SetActive(false);
     }
     void Update()
     {
-        if (timeGroup == 0)
+        if(!_isTimeStop)
         {
+            timeText.gameObject.SetActive(true);
             timer -= Time.deltaTime;
-        }
-        else if (timeGroup == 1)
-        {
-            timer = timer;
-        }
-        else if(timeGroup ==2)
-        {
-            timer = 0;
-        }
+        }    
         if (timer <= 0)
         {
             timeText.gameObject.SetActive(false);

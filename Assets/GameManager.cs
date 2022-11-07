@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     [SerializeField] string _blockPrefabName = "BlockPrefab";
     [SerializeField,Header("è∞")] Transform _blockAnchorRoot;
     [SerializeField] Text _message;
+    private TimeCountText timeCountText;
+    private void Start()
+    {
+        timeCountText = GameObject.Find("TimeText").GetComponent<TimeCountText>();
+    }
     public void InitializeGame()
     {
         foreach(var a in _blockAnchorRoot.GetComponentsInChildren<Transform>())
@@ -86,7 +91,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         _message.text = DrawMessage;
                     }
                 }
-                TimeCountText.timeGroup = 2;
+                timeCountText.IsTimeStop = true;
             }
             else if(killedPlayerActorNumber!= PhotonNetwork.LocalPlayer.ActorNumber)
             {
@@ -108,7 +113,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         _message.text = winMessage1;
                     }
                 }
-                TimeCountText.timeGroup = 2;
+                timeCountText.IsTimeStop = true;
                 rb.isKinematic = true;
             }
         }

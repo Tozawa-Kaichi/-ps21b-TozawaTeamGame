@@ -16,7 +16,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     [SerializeField] Text waitNow = default;
     [SerializeField] Text countDownText = default;
     [SerializeField] GameObject timeObj = default;
-
+    private TimeCountText timeCountText;
 
     private void Awake()
     {
@@ -40,10 +40,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     {
         // Photon に接続する
         Connect("1.0"); // 1.0 はバージョン番号（同じバージョンを指定したクライアント同士が接続できる）
-
-
-
-
+        timeCountText = GameObject.Find("TimeText").GetComponent<TimeCountText>();
     }
 
     /// <summary>
@@ -200,6 +197,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         {
             waitNow.text = "対戦相手を待っています・・・";
             rb.isKinematic = true;
+            timeCountText.IsTimeStop = true;
         }
         else
         {
@@ -305,10 +303,10 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         go.TryGetComponent(out Rigidbody rb);
         for (int i = 3; i > -1; i--)
         {
+            
             rb.isKinematic = true;
             yield return new WaitForSeconds(1);//1秒待つ
-            countDownText.text = i.ToString();
-            timeObj.SetActive(false);
+            countDownText.text = i.ToString();         
             if (i == 0)
             {
                 countDownText.text = "START!";
@@ -316,6 +314,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
                 rb.isKinematic = false;
                 countDownText.gameObject.SetActive(false);
                 timeObj.SetActive(true);
+                timeCountText.IsTimeStop = false;
             }
         }
         yield break;

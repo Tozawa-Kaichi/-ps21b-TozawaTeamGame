@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!_view.IsMine) return;
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _input = new Vector3(h, 0, v);
